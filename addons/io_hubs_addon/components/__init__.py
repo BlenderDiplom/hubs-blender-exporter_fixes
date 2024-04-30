@@ -1,4 +1,6 @@
 from . import (handlers, gizmos, components_registry, ui, operators, utils)
+from . import find_components
+
 
 
 def register():
@@ -9,6 +11,8 @@ def register():
     operators.register()
     ui.register()
 
+    find_components.register()
+
 
 def unregister():
     ui.unregister()
@@ -17,3 +21,5 @@ def unregister():
     gizmos.unregister()
     handlers.unregister()
     utils.unregister()
+
+    find_components.unregister()
