@@ -962,7 +962,8 @@ class BakeLightmaps(Operator):
         node_tree.links.new(UVmap_node.outputs['UV'], lightmap_texture_node.inputs['Vector'])
         node_tree.links.new(lightmap_texture_node.outputs['Color'], lightmap_node.inputs['Lightmap'])
 
-        # the image texture node needs to be the active one for baking
+        # The image texture node needs to be the active one for baking and for Blender 5.0+ it must also be selected (see https://projects.blender.org/blender/blender/pulls/137389)
+        lightmap_texture_node.select = True
         node_tree.nodes.active = lightmap_texture_node
 
         return lightmap_texture_node
