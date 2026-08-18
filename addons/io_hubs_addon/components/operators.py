@@ -778,7 +778,9 @@ class BakeLightmaps(Operator):
         self.errors = 0
         self.bake_started = False
         self.saved_props = {}
-        # Then attach the bake complete handler to Blender's app handlers.
+        # Then attach the bake cancelled/complete handlers to Blender's app handlers.
+        if self.bake_cancel_handler not in bpy.app.handlers.object_bake_cancel:
+            bpy.app.handlers.object_bake_cancel.append(self.bake_cancel_handler)
         if self.bake_complete_handler not in bpy.app.handlers.object_bake_complete:
             bpy.app.handlers.object_bake_complete.append(self.bake_complete_handler)
         
