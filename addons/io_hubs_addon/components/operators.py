@@ -951,7 +951,7 @@ class BakeLightmaps(Operator):
 
         img = bpy.data.images.new('LightMap', self.resolution, self.resolution, alpha=False, float_buffer=True)
         lightmap_texture_node.image = img
-        if self.self.image_type == 'HDR':
+        if self.image_type == 'HDR':
             if bpy.app.version < (4, 0, 0):
                 lightmap_texture_node.image.colorspace_settings.name = "Linear"
             else:
