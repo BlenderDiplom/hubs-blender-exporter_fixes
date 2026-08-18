@@ -980,10 +980,21 @@ class BakeLightmaps(Operator):
             else:
                 # TODO: Check wether all nodes are set up correctly. There is another pull request open for this. For now assume they are.
                 lightmap_nodes[0].intensity = self.default_intensity
-                # the image texture node needs to be the active one for baking, it is connected to the lightmap node so get it from there
-                lightmap_texture_node = lightmap_nodes[0].inputs[0].links[0].from_node
-                mat.node_tree.nodes.active = lightmap_texture_node
-                lightmap_texture_nodes.append(lightmap_texture_node)
+                # The image texture node needs to be the active one for baking and for Blender 5.0+ it must also be selected (see https://projects.blender.org/blender/blender/pulls/137389).  It is connected to the lightmap node so get it from there.
+                try:
+                    lightmap_texture_node = lightmap_nodes[0].inputs[0].links[0].from_node
+
+                    if not hasattr(lightmap_texture_node, "image") or not lightmap_texture_node.image:
+                        self.errors += 1
+                        self.report({'ERROR'}, f"An invalid image texture node is connected to the lightmap node in {mat.name}")
+                        continue
+
+                    lightmap_texture_node.select = True
+                    mat.node_tree.nodes.active = lightmap_texture_node
+                    lightmap_texture_nodes.append(lightmap_texture_node)
+                except IndexError:
+                    self.errors += 1
+                    self.report({'ERROR'}, f"No image texture node is connected to the lightmap node in {mat.name}")
         return lightmap_texture_nodes
 
 
