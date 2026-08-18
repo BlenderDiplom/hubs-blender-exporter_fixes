@@ -773,7 +773,9 @@ class BakeLightmaps(Operator):
     def execute(self, context):
         # This function manages the handler that will run over and over.
         # First reset state flags.
+        self.cancelled = False
         self.done = False
+        self.errors = 0
         self.bake_started = False
         self.saved_props = {}
         # Then attach the bake complete handler to Blender's app handlers.
