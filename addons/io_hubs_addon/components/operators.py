@@ -812,9 +812,10 @@ class BakeLightmaps(Operator):
                 self.selected_objects = context.selected_objects
 
                 # filter mesh objects and others
-                mesh_objs, other_objs = [], []
+                mesh_objs = []
                 for ob in self.selected_objects:
-                    (mesh_objs if ob.type == 'MESH' else other_objs).append(ob)
+                    if ob.type == 'MESH':
+                        mesh_objs.append(ob)
                     # Remove all objects from selection so we can easily re-select subgroups later
                     ob.select_set(False)
 
