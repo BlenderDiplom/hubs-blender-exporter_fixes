@@ -895,7 +895,13 @@ class BakeLightmaps(Operator):
                     bpy.app.handlers.object_bake_complete.remove(self.bake_complete_handler)
                 context.window_manager.event_timer_remove(self._timer)
 
-                self.report({'INFO'}, "Baking Hubs lightmaps completed successfully!")
+                if self.errors:
+                    self.report({'ERROR'}, f"Baking Hubs lightmaps completed with {errors} errors!")
+                else:
+                    if self.done:
+                        self.report({'INFO'}, "Baking Hubs lightmaps completed successfully!")
+                    elif self.cancelled:
+                        self.report({'INFO'}, "Baking Hubs lightmaps cancelled!")
                 return {"FINISHED"}
 
         # If self.bake_started is True but self.done is false, just wait.
