@@ -703,6 +703,9 @@ class BakeLightmaps(Operator):
     bake_margin: IntProperty(name="Bake Margin",
                              default=4,
                              description="How far the lightmaps extends the UV bounds. If you encounter black spots on the lightmap, try increasing this value.")
+    # Handler method to catch when bake is cancelled.
+    def bake_cancel_handler(self, context, scene):
+        self.cancelled = True
 
     # Handler method to catch when bake is done.
     def bake_complete_handler(self, context, scene):
