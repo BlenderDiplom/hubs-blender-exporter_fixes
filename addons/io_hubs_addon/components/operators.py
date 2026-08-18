@@ -679,7 +679,9 @@ class BakeLightmaps(Operator):
 
     # Global vars for modal operator
     _timer = None
+    cancelled = False
     done = False
+    errors = 0
     bake_started = False
     lightmap_texture_nodes = []
     # properties to restore after operator is finished
