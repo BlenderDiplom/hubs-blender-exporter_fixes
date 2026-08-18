@@ -973,7 +973,8 @@ class BakeLightmaps(Operator):
             lightmap_nodes = [node for node in mat_nodes if node.bl_idname == 'moz_lightmap.node']
             number_of_lightmap_nodes = len(lightmap_nodes)
             if number_of_lightmap_nodes > 1:
-                print(str(number_of_lightmap_nodes) + " lightmap nodes in node tree of material " + mat.name + ". There should only be one!")
+                self.errors += 1
+                self.report({'ERROR'}, f"{number_of_lightmap_nodes} lightmap nodes in node tree of material  {mat.name}. There should only be one!")
             elif len(lightmap_nodes) < 1:
                 lightmap_texture_nodes.append(self.setup_moz_lightmap_nodes(mat.node_tree))
             else:
