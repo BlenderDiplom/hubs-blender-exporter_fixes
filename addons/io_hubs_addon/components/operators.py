@@ -861,7 +861,7 @@ class BakeLightmaps(Operator):
                 # Remain in modal state while baking.
                 return {"PASS_THROUGH"}
             # We only enter this block if the bake_complete_handler has flipped self.done to True.
-            elif self.done:
+            elif self.done or self.cancelled:
                 # Pack all newly created or updated images
                 for node in self.lightmap_texture_nodes:
                     file_path = bpy.path.abspath(f"{bpy.app.tempdir}/{node.image.name}.{self.image_type.lower()}")
