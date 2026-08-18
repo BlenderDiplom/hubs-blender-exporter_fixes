@@ -869,10 +869,7 @@ class BakeLightmaps(Operator):
                 # Pack all newly created or updated images
                 for node in self.lightmap_texture_nodes:
                     file_path = bpy.path.abspath(f"{bpy.app.tempdir}/{node.image.name}.{self.image_type.lower()}")
-                    # node.image.save_render(file_path)
-                    node.image.filepath_raw = file_path
-                    node.image.file_format = self.image_type
-                    node.image.save()
+                    node.image.save_render(file_path)
                     node.image.pack()
                     node.image.reload()
                     # Update the filepath so it unpacks nicely for the user.
