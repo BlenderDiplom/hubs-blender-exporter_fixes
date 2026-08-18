@@ -838,7 +838,9 @@ class BakeLightmaps(Operator):
                     for ob in self.selected_objects:
                         ob.select_set(True)
 
-                    # Clean up timer and bake complete handler
+                    # Clean up timer and bake cancelled/complete handlers
+                    if self.bake_cancel_handler in bpy.app.handlers.object_bake_cancel:
+                        bpy.app.handlers.object_bake_cancel.remove(self.bake_cancel_handler)
                     if self.bake_complete_handler in bpy.app.handlers.object_bake_complete:
                         bpy.app.handlers.object_bake_complete.remove(self.bake_complete_handler)
                     context.window_manager.event_timer_remove(self._timer)
